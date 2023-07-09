@@ -1,48 +1,54 @@
-import pickle
-import numpy as np
 import pandas as pd
-import seaborn as sns
-import plotly.express as pĺx
-import matplotlib.pyplot as plt
+import pickle
+from sklearn.calibration import LabelEncoder
 from sklearn.naive_bayes import GaussianNB
-from sklearn.preprocessing import StandardScaler, LabelEncoder, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split 
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-base = pd.read_csv("./pre_processamento/data/credit_data.csv")
-base.head(20)
 
-x = base.iloc[:, 1:4].values
-y = base.iloc[:, 4].values
-x.shape
+base = pd.read_csv("./data/census.csv")
 
-label_encoder_income = LabelEncoder()
-label_encoder_age = LabelEncoder()
-label_encoder_loan = LabelEncoder()
+base.head(10)
 
-x[:, 0] = label_encoder_income.fit_transform(x[:, 0])
-x[:, 1] = label_encoder_age.fit_transform(x[:, 1])
-x[:, 2] = label_encoder_loan.fit_transform(x[:, 2])
+workclass_encoder = LabelEncoder()
+education_encoder = LabelEncoder()
+maritial_status_encoder = LabelEncoder()
+occupation_encoder = LabelEncoder()
+relationship_encoder = LabelEncoder()
+race_encoder = LabelEncoder()
+sex_encoder = LabelEncoder()
+native_country_encoder = LabelEncoder()
 
-ohe_censu = ColumnTransformer(
-    transformers=[("OneHot", OneHotEncoder(), [0, 1, 2])], remainder="passthrough"
-)
+x = base.iloc[:, 0:14].values
+y = base.iloc[:, 14].values
 
-x = ohe_censu.fit_transform(x).toarray()
-x.shape
+x.shape, y.shape
+
+x[:, 1] = workclass_encoder.fit_transform(x[:, 1])
+x[:, 3] = workclass_encoder.fit_transform(x[:, 3])
+x[:, 5] = workclass_encoder.fit_transform(x[:, 5])
+x[:, 6] = workclass_encoder.fit_transform(x[:, 6])
+x[:, 7] = workclass_encoder.fit_transform(x[:, 7])
+x[:, 8] = workclass_encoder.fit_transform(x[:, 8])
+x[:, 9] = workclass_encoder.fit_transform(x[:, 9])
+x[:, 13] = workclass_encoder.fit_transform(x[:, 13])
+
+scaler = StandardScaler()
+x = scaler.fit_transform(x)
+
+with open("naive_bayes/census.pkl", "wb") as f:
+    pickle.dump([x, y], f)
+
 
 x_train, x_test, y_train, y_test = train_test_split(
-    x, y, test_size=0.25, random_state=0
+    x, y, train_size=0.2, random_state=0
 )
 
-with open("credit.pkl", mode="wb") as f:
-    pickle.dump([x_train, y_train, x_test, y_test], f)
+x_train.shape, y_train.shape
 
+model = GaussianNB()
+model.fit(x_train, y_train)
 
-classifier = GaussianNB()
-classifier.fit(x,y)
-
-previsoes = classifier.predict(x_test)
-accuracy_score(y_test, previsoes)
-confusion_matrix(y_test, previsoes)
+predict = model.predict(x_test)
+accuracy_score(y_test, predict)
