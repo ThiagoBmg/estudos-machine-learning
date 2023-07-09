@@ -18,5 +18,10 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.25, random_state=0
 )
 
+x_train.shape
+y_train.shape
+x_test.shape
+y_test.shape
+
 with open("./pre_processamento/credit_data.pkl", "wb") as f:
     pickle.dump([x_train, x_test, y_train, y_test], f)
