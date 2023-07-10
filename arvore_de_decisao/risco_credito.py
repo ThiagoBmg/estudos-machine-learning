@@ -7,9 +7,7 @@ with open("./data/risco_credito.pkl", "rb") as f:
     x_train, x_test, y_train, y_test = pickle.load(f)
 
 
-model = RandomForestClassifier(
-    n_estimators=20, criterion="entropy", random_state=0
-)
+model = RandomForestClassifier(n_estimators=20, criterion="entropy", random_state=0)
 model.fit(x_train, y_train)
 
 predict_test = model.predict(x_test)
