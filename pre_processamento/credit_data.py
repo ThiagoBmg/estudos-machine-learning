@@ -23,5 +23,5 @@ y_train.shape
 x_test.shape
 y_test.shape
 
-with open("./pre_processamento/credit_data.pkl", "wb") as f:
+with open("./data/credit_data.pkl", "wb") as f:
     pickle.dump([x_train, x_test, y_train, y_test], f)

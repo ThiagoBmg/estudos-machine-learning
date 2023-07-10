@@ -1,8 +1,9 @@
+# 0.4796708021127626
 import pickle
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 
-with open("./pre_processamento/census.pkl", "rb") as f:
+with open("./data/census.pkl", "rb") as f:
     x_train, x_test, y_train, y_test = pickle.load(f)
 
 

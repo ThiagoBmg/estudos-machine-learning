@@ -23,5 +23,5 @@ x_train, x_test, y_train, y_test = train_test_split(
 )
 
 
-with open("./pre_processamento/risco_credito.pkl", "wb") as f:
+with open("./data/risco_credito.pkl", "wb") as f:
     pickle.dump([x_train, x_test, y_train, y_test], f)

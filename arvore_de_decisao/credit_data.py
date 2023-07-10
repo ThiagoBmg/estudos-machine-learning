@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.tree import DecisionTreeClassifier
 
-base = pd.read_csv("./pre_processamento/data/credit_data.csv")
+base = pd.read_csv("./data/data/credit_data.csv")
 
 valid_age_mean = base["age"][base["age"] >= 0].mean()
 
