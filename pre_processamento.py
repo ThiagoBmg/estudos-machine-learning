@@ -39,6 +39,8 @@ def census():
     scaler = StandardScaler()
     x = scaler.fit_transform(x)
 
+    x_train.shape
+
     x_train, x_test, y_train, y_test = train_test_split(
         x, y, test_size=0.25, random_state=0
     )

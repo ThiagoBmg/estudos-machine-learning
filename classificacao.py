@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.linear_model import LogisticRegression
 
 ### Naive Bayes
 
@@ -139,5 +139,29 @@ with open("./data/risco_credito.pkl", "rb") as f:
     model.fit(x_train, y_train)
 
     # 0.25
+    predict_test = model.predict(x_test)
+    accuracy_score(predict_test, y_test)
+
+
+# Regressão logistica
+
+with open("./data/risco_credito.pkl", "rb") as f:
+    x_train, x_test, y_train, y_test = pickle.load(f)
+
+    model = LogisticRegression(random_state=1)
+    model.fit(x_train, y_train)
+
+    # 0.5
+    predict_test = model.predict(x_test)
+    accuracy_score(predict_test, y_test)
+
+
+with open("./data/census.pkl", "rb") as f:
+    x_train, x_test, y_train, y_test = pickle.load(f)
+    
+    model = LogisticRegression(random_state=1)
+    model.fit(x_train, y_train)
+
+    # 0.85
     predict_test = model.predict(x_test)
     accuracy_score(predict_test, y_test)
